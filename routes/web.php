@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\productcontroller;
 use App\Models\Product;
+use App\Models\SubCategory;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 
 /*
@@ -21,17 +23,23 @@ Route::get('/', function () {
 
     //Product::factory()->count(20)->create();
     //Category::factory()->count(6)->create();
-    return view('home');
+    return view('home', [
+        'categories' => DB::table('categories')->select('*')->get(),
+        'subcategories' => DB::table('sub_categories')->select('*')->get(),
+        'products' => DB::table('products')->select('*')->get(),
+    ]);
 });
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/products/{category}', function (string $category) {
-    //$products = Product::with('category')->where('id', 'categoryId')->get();
-    //return view('itemList', compact('products'));
+Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {
+    $category = Category::select('*')->where('name', '=', $categoryName)->first();
+    $categoryID = $category['id'];
+    //return $category;
+    $subCategory = SubCategory::select('id')->where('name', '=', $subCategoryName)->where('category_id', '=', $categoryID)->first();
+    $subCategoryID = $subCategory['id'];
     return view('itemList', [
-        //'products2' => Product::with('category')->where('category_id', $category)->get(),
-        'products' => DB::table('products')->select('*')->where('category_id', '=',$category)->get(),
+        'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->get(),
     ]);
 
 });

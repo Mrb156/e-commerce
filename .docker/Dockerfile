@@ -43,12 +43,11 @@ COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 #COPY ./ /var/www
 
 # install npm
-#RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
-#    apt-get install -y nodejs
-#    && \
-#    npm install && \
-#    npm run prod && \
-#    rm -rf node_modules
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install && \
+    npm run prod && \
+    rm -rf node_modules
 
 # install composer packages
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
