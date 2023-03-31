@@ -40,6 +40,8 @@ Route::get('/products/{categoryName}/{subCategoryName}', function (string $categ
     $subCategoryID = $subCategory['id'];
     return view('itemList', [
         'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->get(),
+        'categories' => DB::table('categories')->select('*')->get(),
+        'subcategories' => DB::table('sub_categories')->select('*')->get(),
     ]);
 
 });

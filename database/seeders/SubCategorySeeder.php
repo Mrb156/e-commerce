@@ -21,5 +21,9 @@ class SubCategorySeeder extends Seeder
             'name' => 'Pólók',
             'category_id' => 2
         ]);
+        DB::table('sub_categories')->insert([
+            'name' => 'Ékszerek',
+            'category_id' => 1
+        ]);
     }
 }
