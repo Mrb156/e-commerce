@@ -13,6 +13,12 @@
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
+                            <li>
+                                <a href="{{route('register')}}"
+                                   class="font-medium text-indigo-600 hover:text-indigo-500">
+                                    Nincs még felhasználó? Csinálj egyet!
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
