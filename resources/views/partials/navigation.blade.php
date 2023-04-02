@@ -72,30 +72,38 @@
 
                 <div class="ml-auto flex items-center">
                     <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-
-                        <a x-show="{{\Illuminate\Support\Facades\Auth::check()}}" href="{{route('login')}}"
-                           class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
-                            in</a>
-                        <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-                        <a href="{{route('register')}}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create
-                            account</a>
-                        <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-
-
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <a href="{{route('login')}}"
+                               class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
+                                in</a>
+                            <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+                            <a href="{{route('register')}}"
+                               class="text-sm font-medium text-gray-700 hover:text-gray-800">Create
+                                account</a>
+                            <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+                        @endif
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            <a class="text-sm font-medium text-gray-700 hover:text-gray-800"
+                               href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
-                        >Logout</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                        </form>
+                            >Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
                     </div>
-
+                    @endif
                     <!-- Search -->
                     <div class="flex lg:ml-6">
                         @include('partials.search')
                     </div>
-
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        <div>
+                            <a>
+                                {{\Illuminate\Support\Facades\Auth::user()->name}}
+                            </a>
+                        </div>
+                    @endif
                     <!-- Cart -->
                     <div class="ml-4 flow-root lg:ml-6">
                         <a href="#" class="group -m-2 flex items-center p-2">

@@ -4,35 +4,35 @@
         <div>
             <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                  alt="Your Company">
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-        </div>
-        <form class="mt-8 space-y-6" action="{{route('authenticate')}}" method="post">
-            @csrf
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Jelentkezz be!</h2>
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger text-center">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                             <li>
                                 <a href="{{route('register')}}"
                                    class="font-medium text-indigo-600 hover:text-indigo-500">
-                                    Nincs még felhasználó? Csinálj egyet!
+                                    Nincs még felhasználód? Csinálj egyet!
                                 </a>
                             </li>
                         @endforeach
                     </ul>
                 </div>
             @endif
+        </div>
+        <form class="mt-8 space-y-6" action="{{route('authenticate')}}" method="post">
+            @csrf
             <input type="hidden" name="remember" value="true">
             <div class="-space-y-px rounded-md shadow-sm">
                 <div>
-                    <label for="email" class="sr-only">Email address</label>
+                    <label for="email" class="sr-only">Email cím</label>
                     <input id="email" name="email" type="email" autocomplete="email" required
                            class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                            placeholder="Email address">
                 </div>
                 <div>
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Jelszó</label>
                     <input id="password" name="password" type="password" autocomplete="current-password" required
                            class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                            placeholder="Password">
@@ -43,11 +43,11 @@
                 <div class="flex items-center">
                     <input id="remember-me" name="remember-me" type="checkbox"
                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Jegyezz meg</label>
                 </div>
 
                 <div class="text-sm">
-                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Elfelejtetted a jelszavad?</a>
                 </div>
             </div>
 
