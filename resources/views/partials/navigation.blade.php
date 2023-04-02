@@ -72,9 +72,23 @@
 
                 <div class="ml-auto flex items-center">
                     <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                        <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</a>
+
+                        <a x-show="{{\Illuminate\Support\Facades\Auth::check()}}" href="{{route('login')}}"
+                           class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
+                            in</a>
                         <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-                        <a href="#" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</a>
+                        <a href="{{route('register')}}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create
+                            account</a>
+                        <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+
+
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"
+                        >Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                        </form>
                     </div>
 
                     <!-- Search -->

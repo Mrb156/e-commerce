@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthLoginRegisterController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\productcontroller;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\Category;
@@ -28,10 +29,16 @@ Route::get('/', function () {
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
         'products' => DB::table('products')->select('*')->get(),
     ]);
-});
-Route::get('/login', function () {
-    return view('login');
-});
+})->name('home');
+
+Route::get('/register', [AuthLoginRegisterController::class, 'register'])->name('register');
+Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('store');
+
+Route::get('/login', [AuthLoginRegisterController::class, 'login'])->name('login');
+Route::post('/authenticate', [AuthLoginRegisterController::class, 'authenticate'])->name('authenticate');
+
+Route::post('/logout', [AuthLoginRegisterController::class, 'logout'])->name('logout');
+
 Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {
     $category = Category::select('*')->where('name', '=', $categoryName)->first();
     $categoryID = $category['id'];
