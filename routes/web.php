@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthLoginRegisterController;
+use App\Http\Controllers\OrderController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
@@ -21,13 +23,20 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
+        $orderId = $order['id'];
 
-    //Product::factory()->count(20)->create();
-    //Category::factory()->count(6)->create();
+    } else {
+        $orderId = null;
+    }
+
     return view('home', [
         'categories' => DB::table('categories')->select('*')->get(),
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
         'products' => DB::table('products')->select('*')->get(),
+        'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
+        'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
     ]);
 })->name('home');
 
@@ -38,6 +47,9 @@ Route::get('/login', [AuthLoginRegisterController::class, 'login'])->name('login
 Route::post('/authenticate', [AuthLoginRegisterController::class, 'authenticate'])->name('authenticate');
 
 Route::post('/logout', [AuthLoginRegisterController::class, 'logout'])->name('logout');
+
+
+Route::get('/removeItem', [OrderController::class, 'remove'])->name('item.remove');
 
 Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {
     $category = Category::select('*')->where('name', '=', $categoryName)->first();
