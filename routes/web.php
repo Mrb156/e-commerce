@@ -49,18 +49,76 @@ Route::post('/authenticate', [AuthLoginRegisterController::class, 'authenticate'
 Route::post('/logout', [AuthLoginRegisterController::class, 'logout'])->name('logout');
 
 
-Route::get('/removeItem', [OrderController::class, 'remove'])->name('item.remove');
+Route::post('/removeItemFromCart', [OrderController::class, 'removeItemFromCart'])->name('item.remove');
+Route::post('/insertItemToCart', [OrderController::class, 'insertItemToCart'])->name('item.insert');
+
+Route::get('/itemOverview/{id}', function (int $id) {
+    if (Auth::check()) {
+        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
+        $orderId = $order['id'];
+
+    } else {
+        $orderId = null;
+    }
+    $product = Product::select('*')->where('id', 'like', $id)->first();
+    $subCategory = SubCategory::select('*')->where('id', 'like', $product->sub_category_id)->first();
+    $category = Category::select('*')->where('id', 'like', $subCategory->category_id)->first();
+    return view('overview', [
+        'subCategory' => $subCategory,
+        'category' => $category,
+        'product' => $product,
+        'categories' => DB::table('categories')->select('*')->get(),
+        'subcategories' => DB::table('sub_categories')->select('*')->get(),
+        'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
+        'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
+    ]);
+})->name('itemOverview');
+
 
 Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {
+    if (Auth::check()) {
+        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
+        $orderId = $order['id'];
+
+    } else {
+        $orderId = null;
+    }
     $category = Category::select('*')->where('name', '=', $categoryName)->first();
     $categoryID = $category['id'];
     //return $category;
-    $subCategory = SubCategory::select('id')->where('name', '=', $subCategoryName)->where('category_id', '=', $categoryID)->first();
-    $subCategoryID = $subCategory['id'];
-    return view('itemList', [
+    if ($subCategoryName != null) {
+        $subCategory = SubCategory::select('id')->where('name', '=', $subCategoryName)->where('category_id', '=', $categoryID)->first();
+        $subCategoryID = $subCategory['id'];
+    } else {
+        $subCategoryID = '*';
+    }
+    return view('home', [
         'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->get(),
         'categories' => DB::table('categories')->select('*')->get(),
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
+        'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
+        'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
+    ]);
+
+});
+
+Route::get('/products/{categoryName}', function (string $categoryName) {
+    if (Auth::check()) {
+        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
+        $orderId = $order['id'];
+
+    } else {
+        $orderId = null;
+    }
+    $category = Category::select('*')->where('name', '=', $categoryName)->first();
+    $categoryID = $category['id'];
+
+    return view('home', [
+        'products' => DB::table('products')->select('*')->where('category_id', '=', $categoryID)->get(),
+        'categories' => DB::table('categories')->select('*')->get(),
+        'subcategories' => DB::table('sub_categories')->select('*')->get(),
+        'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
+        'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
     ]);
 
 });

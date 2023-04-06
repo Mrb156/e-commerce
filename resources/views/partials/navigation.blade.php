@@ -219,10 +219,16 @@
                                                                         db</p>
 
                                                                     <div class="flex">
-                                                                        <a href="{{route('item.remove', ['id' => $order_item->id])}}"
-                                                                           class="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                            Remove
-                                                                        </a>
+                                                                        <form
+                                                                            action="{{route('item.remove', ['id' => $order_item->id])}}"
+                                                                            method="post"
+                                                                            class="font-medium text-indigo-600 hover:text-indigo-500">
+                                                                            @csrf
+                                                                            <button type="submit">
+                                                                                Remove
+                                                                            </button>
+                                                                        </form>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
