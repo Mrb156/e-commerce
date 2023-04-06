@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained('users');
             $table->integer('price');
+            $table->integer('item_count');
             $table->timestamps();
         });
     }

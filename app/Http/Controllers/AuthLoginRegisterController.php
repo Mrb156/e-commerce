@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -51,15 +52,21 @@ class AuthLoginRegisterController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        User::create($input);
-
+        $user = User::create($input);
+        Order::create([
+            'user_id' => $user->id,
+            'price' => 0,
+            'item_count' => 0,
+        ]);
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
+
             return redirect()->route('home')
                 ->withSuccess('You have successfully registered & logged in!');
         }
+
         return back()->withInput();
     }
 

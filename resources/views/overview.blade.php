@@ -102,9 +102,13 @@
                             reviews</a>
                     </div>
                 </div>
-       
-                <form class="mt-10" {{$db = 1}}
-                action="{{route('item.insert', ['id'=>$product->id, 'db'=>$db])}}"
+
+                @php
+                    $db = 1;
+                @endphp
+
+                <form class="mt-10"
+                      action="{{route('item.insert', ['id'=>$product->id, 'db'=>$db])}}"
                       method="post">
                     @csrf
                     <!-- Colors -->
@@ -290,17 +294,19 @@
                         </fieldset>
                     </div>
 
-                    <div class="my-10">
-                        <button x-on:click="{{$db--}}" type="button"
-                                x-show="db>1"
+                    <div class="my-10" x-data="{ count: 1 }">
+                        <button x-on:click="count--" type="button"
+                                x-show="count>1"
                                 class="bg-transparent hover:bg-indigo-600 text-indigo-600 font-bold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded">
                             -
                         </button>
-                        <span name="db">{{$db}} db</span>
-                        <button x-on:click="{{$db++}}" type="button"
+                        <input x-model="count" name="db" min=1 onKeyDown="return false">
+
+                        <button x-on:click="count++" type="button"
                                 class="bg-transparent hover:bg-indigo-600 text-indigo-600 font-bold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded">
                             +
                         </button>
+
                     </div>
                     <button type="submit"
                             class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

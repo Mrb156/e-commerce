@@ -14,8 +14,13 @@ class OrderController extends Controller
 {
     public function removeItemFromCart(Request $request)
     {
+        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
         $id = $request->only('id');
         $orderItem = OrderItem::select()->where('id', '=', $id)->first();
+        $updatedOrderPrice = $order->price - $orderItem->price;
+        $order->price = $updatedOrderPrice;
+        $order->item_count--;
+        $order->save();
         $orderItem->delete();
         return redirect()->back();
     }
@@ -35,8 +40,12 @@ class OrderController extends Controller
             "quantity" => $quantity,
             "price" => $price
         );
-
+        $updatedOrderPrice = $order->price + $price;
         OrderItem::create($data);
+        $order->price = $updatedOrderPrice;
+        $order->item_count++;
+        $order->save();
+
         return redirect()->back();
     }
 }
