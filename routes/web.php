@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthLoginRegisterController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -22,23 +23,10 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
-        $orderId = $order['id'];
-
-    } else {
-        $orderId = null;
-    }
-
-    return view('home', [
-        'categories' => DB::table('categories')->select('*')->get(),
-        'subcategories' => DB::table('sub_categories')->select('*')->get(),
-        'products' => DB::table('products')->select('*')->get(),
-        'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
-        'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
-    ]);
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+//Route::get('/', function () {
+//    return redirect()->route('all', ['categoryName' => null, 'subCategoryName' => null]);
+//})->name('home');
 
 Route::get('/register', [AuthLoginRegisterController::class, 'register'])->name('register');
 Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('store');
@@ -83,11 +71,14 @@ Route::get('/products/{categoryName}/{subCategoryName}', function (string $categ
     } else {
         $orderId = null;
     }
-    $category = Category::select('*')->where('name', '=', $categoryName)->first();
-    $categoryID = $category['id'];
-    //return $category;
+    if ($categoryName != null) {
+        $category = Category::select('*')->where('name', 'like', "%{$categoryName}%")->first();
+        $categoryID = $category['id'];
+    } else {
+        $categoryID = '*';
+    }
     if ($subCategoryName != null) {
-        $subCategory = SubCategory::select('id')->where('name', '=', $subCategoryName)->where('category_id', '=', $categoryID)->first();
+        $subCategory = SubCategory::select('id')->where('name', 'like', "%{$subCategoryName}%")->where('category_id', '=', $categoryID)->first();
         $subCategoryID = $subCategory['id'];
     } else {
         $subCategoryID = '*';
@@ -96,11 +87,13 @@ Route::get('/products/{categoryName}/{subCategoryName}', function (string $categ
         'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->get(),
         'categories' => DB::table('categories')->select('*')->get(),
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
+        'subcategory' => $subCategory,
+        'category' => $category,
         'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
         'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
     ]);
 
-});
+})->name('all');
 
 Route::get('/products/{categoryName}', function (string $categoryName) {
     if (Auth::check()) {
