@@ -1,8 +1,17 @@
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 1;
+            padding: 0;
+        }
+    </style>
+</head>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
 <div x-data="{ cartShow : false }">
     <header class="relative bg-white">
-        <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Top" class="mx-auto max-w-8xl px-4">
             <div class="border-b border-gray-200 items-center">
                 <div class="flex h-16 items-center">
                     <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
@@ -17,8 +26,7 @@
 
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="/">
-                            <span class="sr-only">Your Company</span>
+                        <a href="{{route('home')}}">
                             <img class="h-8 w-auto"
                                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
                         </a>
@@ -247,7 +255,7 @@
                                         <p class="mt-0.5 text-sm text-gray-500">Szállítási költségek a fizetésnél
                                             számolódnak.</p>
                                         <div class="mt-6">
-                                            <a href="#"
+                                            <a href="{{route('checkout')}}"
                                                class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Fizetés</a>
                                         </div>
                                         <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
@@ -270,7 +278,4 @@
 
         </div>
     @endif
-
 </div>
-
-

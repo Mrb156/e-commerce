@@ -1,0 +1,31 @@
+<?php
+
+use App\Models\PlacedOrder;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('placed_order_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(PlacedOrder::class)->constrained('placed_orders');
+            $table->foreignIdFor(\App\Models\Product::class)->constrained('products');
+            $table->integer('quantity');
+            $table->integer('price');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('placed_order_items');
+    }
+};

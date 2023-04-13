@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthLoginRegisterController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
@@ -115,3 +116,6 @@ Route::get('/products/{categoryName}', function (string $categoryName) {
     ]);
 
 });
+
+Route::get('/checkout', [CheckOutController::class, 'index'])->name('checkout');
+Route::post('/payment', [OrderController::class, 'archiveOrder'])->name('order.delete');
