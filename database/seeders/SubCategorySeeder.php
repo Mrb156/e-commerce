@@ -14,11 +14,11 @@ class SubCategorySeeder extends Seeder
     public function run(): void
     {
         DB::table('sub_categories')->insert([
-            'name' => 'Pólók',
+            'name' => 'Női pólók',
             'category_id' => 1
         ]);
         DB::table('sub_categories')->insert([
-            'name' => 'Pólók',
+            'name' => 'Férfi pólók',
             'category_id' => 2
         ]);
         DB::table('sub_categories')->insert([

@@ -25,16 +25,14 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-//Route::get('/', function () {
-//    return redirect()->route('all', ['categoryName' => null, 'subCategoryName' => null]);
-//})->name('home');
 Auth::routes();
-Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//Route::group(['middleware' => ['admin']], function () {
-//    Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-//});
+Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+Route::get('/adminProducts', [AdminController::class, 'getProducts'])->name('admin.products')->middleware('admin');
+Route::post('/addProduct', [AdminController::class, 'addProduct'])->name('product.add')->middleware('admin');
+Route::get('/adminOrders', [AdminController::class, 'getOrders'])->name('admin.orders')->middleware('admin');
+Route::get('/adminUsers', [AdminController::class, 'getUsers'])->name('admin.users')->middleware('admin');
 
 Route::get('/register', [AuthLoginRegisterController::class, 'register'])->name('register');
 Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('store');
