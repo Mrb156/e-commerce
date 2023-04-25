@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\OrderItem;
+use App\Models\PlacedOrder;
+use App\Models\PlacedOrderItem;
 use App\Models\Product;
 use App\Models\SubCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -33,12 +38,29 @@ class AdminController extends Controller
 
     public function getOrders()
     {
-        return view('admin.products');
+        return view('admin.placedOrders', [
+            'placed_orders' => PlacedOrder::select('*')->get(),
+            'placed_order_items' => PlacedOrderItem::select('*')->get()
+        ]);
+    }
+
+    public function deleteOrders(Request $request)
+    {
+        $input = $request->all();
+        $order = PlacedOrder::select('*')->where('id', 'like', $input['order_id'])->first();
+        $p_order_items = PlacedOrderItem::select('*')->where('placed_order_id', 'like', $order->id)->get();
+        foreach ($p_order_items as $item) {
+            $item->delete();
+        }
+        $order->delete();
+        return redirect()->back();
     }
 
     public function getUsers()
     {
-        return view('admin.products');
+        return view('admin.users', [
+            'users' => User::select('*')->get(),
+        ]);
     }
 
     public function addProduct(Request $request)
@@ -62,6 +84,16 @@ class AdminController extends Controller
         $input = $request->all();
         $product = Product::select('*')->where('id', 'like', $input['prod_id'])->first();
         $product->delete();
+        return redirect()->back();
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $input = $request->all();
+        if (Auth::user()->id != $input['user_id']) {
+            $user = User::select('*')->where('id', 'like', $input['user_id'])->first();
+            $user->delete();
+        }
         return redirect()->back();
     }
 }

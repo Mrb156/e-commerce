@@ -36,7 +36,10 @@ Route::post('/addProduct', [AdminController::class, 'addProduct'])->name('produc
 
 
 Route::get('/adminOrders', [AdminController::class, 'getOrders'])->name('admin.orders')->middleware('admin');
+Route::post('/deleteOrder', [AdminController::class, 'deleteOrders'])->name('p_order.delete')->middleware('admin');
+
 Route::get('/adminUsers', [AdminController::class, 'getUsers'])->name('admin.users')->middleware('admin');
+Route::post('/deleteUser', [AdminController::class, 'deleteUser'])->name('user.delete')->middleware('admin');
 
 Route::get('/register', [AuthLoginRegisterController::class, 'register'])->name('register');
 Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('store');
