@@ -18,9 +18,10 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="{{route('admin.dashboard')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200 hover:bg-gray-300">Kezelőfelület</a>
+                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Kezelőfelület</a>
                         <a href="{{route('admin.products')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Termékek </a>
+                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Termék
+                            hozzáadása </a>
                         <a href="{{route('admin.orders')}}"
                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Rendelések</a>
                         <a href="{{route('admin.users')}}"

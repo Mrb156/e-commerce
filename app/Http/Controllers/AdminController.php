@@ -19,8 +19,7 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.dashboard', [
-            'categories' => DB::table('categories')->select('*')->get(),
-            'subcategories' => DB::table('sub_categories')->select('*')->get(),
+            'products' => DB::table('products')->select('*')->get(),
         ]);
     }
 
@@ -55,6 +54,14 @@ class AdminController extends Controller
             'category_id' => $category_id,
             'sub_category_id' => $sub_category_id,
         ]);
+        return redirect()->back();
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        $input = $request->all();
+        $product = Product::select('*')->where('id', 'like', $input['prod_id'])->first();
+        $product->delete();
         return redirect()->back();
     }
 }

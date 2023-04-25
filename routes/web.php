@@ -29,8 +29,12 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+Route::post('/deleteProduct', [AdminController::class, 'deleteProduct'])->name('product.delete')->middleware('admin');
+
 Route::get('/adminProducts', [AdminController::class, 'getProducts'])->name('admin.products')->middleware('admin');
 Route::post('/addProduct', [AdminController::class, 'addProduct'])->name('product.add')->middleware('admin');
+
+
 Route::get('/adminOrders', [AdminController::class, 'getOrders'])->name('admin.orders')->middleware('admin');
 Route::get('/adminUsers', [AdminController::class, 'getUsers'])->name('admin.users')->middleware('admin');
 
