@@ -52,7 +52,12 @@ class AuthLoginRegisterController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        $user = User::create($input);
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => $input['password'],
+            'role' => 1
+        ]);
         Order::create([
             'user_id' => $user->id,
             'price' => 0,
@@ -63,8 +68,16 @@ class AuthLoginRegisterController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
-            return redirect()->route('home')
-                ->withSuccess('You have successfully registered & logged in!');
+            if (Auth::attempt($request->only('email', 'password'))) {
+                $request->session()->regenerate();
+                if (Auth::user()->role == 1) {
+
+                    return redirect()->route('home')
+                        ->withSuccess('You have successfully logged in!');
+                } elseif (Auth::user()->role == 0) {
+                    return redirect()->route('admin.dashboard');
+                }
+            }
         }
 
         return back()->withInput();
@@ -86,8 +99,13 @@ class AuthLoginRegisterController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->route('home')
-                ->withSuccess('You have successfully logged in!');
+            if (Auth::user()->role == 1) {
+
+                return redirect()->route('home')
+                    ->withSuccess('You have successfully logged in!');
+            } elseif (Auth::user()->role == 0) {
+                return redirect()->route('admin.dashboard');
+            }
         }
 
         return back()->withErrors([
@@ -106,6 +124,6 @@ class AuthLoginRegisterController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('home')
-            ->withSuccess('You have logged out successfully!');;
+            ->withSuccess('You have logged out successfully!');
     }
 }

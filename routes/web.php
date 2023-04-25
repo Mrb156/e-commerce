@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthLoginRegisterController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
@@ -28,6 +29,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //Route::get('/', function () {
 //    return redirect()->route('all', ['categoryName' => null, 'subCategoryName' => null]);
 //})->name('home');
+Auth::routes();
+Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+
+//Route::group(['middleware' => ['admin']], function () {
+//    Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+//});
 
 Route::get('/register', [AuthLoginRegisterController::class, 'register'])->name('register');
 Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('store');
@@ -35,11 +42,11 @@ Route::post('/store', [AuthLoginRegisterController::class, 'store'])->name('stor
 Route::get('/login', [AuthLoginRegisterController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthLoginRegisterController::class, 'authenticate'])->name('authenticate');
 
-Route::post('/logout', [AuthLoginRegisterController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthLoginRegisterController::class, 'logout'])->name('logout')->middleware('auth');
 
 
-Route::post('/removeItemFromCart', [OrderController::class, 'removeItemFromCart'])->name('item.remove');
-Route::post('/insertItemToCart', [OrderController::class, 'insertItemToCart'])->name('item.insert');
+Route::post('/removeItemFromCart', [OrderController::class, 'removeItemFromCart'])->name('item.remove')->middleware('auth');
+Route::post('/insertItemToCart', [OrderController::class, 'insertItemToCart'])->name('item.insert')->middleware('auth');
 
 Route::get('/itemOverview/{id}', function (int $id) {
     if (Auth::check()) {
@@ -117,5 +124,5 @@ Route::get('/products/{categoryName}', function (string $categoryName) {
 
 });
 
-Route::get('/checkout', [CheckOutController::class, 'index'])->name('checkout');
-Route::post('/payment', [OrderController::class, 'archiveOrder'])->name('order.delete');
+Route::get('/checkout', [CheckOutController::class, 'index'])->name('checkout')->middleware('auth');
+Route::post('/payment', [OrderController::class, 'archiveOrder'])->name('order.delete')->middleware('auth');
