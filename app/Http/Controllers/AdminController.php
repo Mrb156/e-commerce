@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PlacedOrder;
 use App\Models\PlacedOrderItem;
@@ -92,6 +93,12 @@ class AdminController extends Controller
         $input = $request->all();
         if (Auth::user()->id != $input['user_id']) {
             $user = User::select('*')->where('id', 'like', $input['user_id'])->first();
+            $order = Order::select('*')->where('user_id', 'like', $user->id)->first();
+            $orderItems = OrderItem::select('*')->where('order_id', 'like', $order->id)->get();
+            foreach ($orderItems as $orderItem) {
+                $orderItem->delete();
+            }
+            $order->delete();
             $user->delete();
         }
         return redirect()->back();
