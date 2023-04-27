@@ -68,8 +68,32 @@ class AdminController extends Controller
     public function addProduct(Request $request)
     {
         $input = $request->all();
-        $category_id = Category::select('*')->where('name', 'like', $input['category'])->first()->id;
-        $sub_category_id = SubCategory::select('*')->where('name', 'like', $input['subcategory'])->first()->id;
+        if ($input['new_category'] == null) {
+            $category_id = Category::select('*')->where('name', 'like', $input['category'])->first()->id;
+            if ($input['new_sub_category'] == null) {
+                $sub_category_id = SubCategory::select('*')->where('name', 'like', $input['subcategory'])->first()->id;
+            } else {
+                $new_sub = SubCategory::create([
+                    'name' => $input['new_sub_category'],
+                    'category_id' => $category_id,
+                ]);
+                $sub_category_id = $new_sub->id;
+            }
+        } else {
+            $new_cat = Category::create([
+                'name' => $input['new_category'],
+            ]);
+            $category_id = $new_cat->id;
+            if ($input['new_sub_category'] == null) {
+                $sub_category_id = SubCategory::select('*')->where('name', 'like', $input['subcategory'])->first()->id;
+            } else {
+                $new_sub = SubCategory::create([
+                    'name' => $input['new_sub_category'],
+                    'category_id' => $category_id,
+                ]);
+                $sub_category_id = $new_sub->id;
+            }
+        }
         Product::create([
             'name' => $input['prod_name'],
             'description' => $input['description'],

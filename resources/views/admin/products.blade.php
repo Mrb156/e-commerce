@@ -4,7 +4,7 @@
 <!-- component -->
 <form method="POST" action="{{route("product.add")}}">
     @csrf
-    <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+    <div class="min-h-screen p-6 bg-gray-100 flex justify-center">
         <div class="container max-w-screen-lg mx-auto">
             <div>
                 <h2 class="font-semibold text-xl text-gray-600">Termék hozzáadása</h2>
@@ -34,41 +34,47 @@
                                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                                 </textarea>
                                 </div>
-                                <div class="md:col-span-4">
-                                    <label for="number">Termék ára</label>
+                                <div class="md:col-span-5">
+                                    <label for="number">Termék ára (Ft)</label>
                                     <input type="number" name="price" id="price"
-                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" Ft/>
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
-                                <div class="md:col-span-1 text-3xl font-medium leading-tight content-center">
-                                    <div>
-                                        <h1>
-                                            Ft
-                                        </h1>
+
+                                <div
+                                    class="md:col-span-5 grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-5">
+
+                                    <div class="md:col-span-1">
+                                        <label for="category">
+                                            Főkategória
+                                        </label>
+                                        <select name="category" id="category">
+                                            @foreach($categories as $category)
+                                                <option
+                                                    value="{{$category->name}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
+                                    <div class="md:col-span-1">
+                                        <label for="subcategory">
+                                            Alkategória
+                                        </label>
+                                        <select name="subcategory" id="subcategory">
+                                            @foreach($subcategories as $subcategory)
+                                                <option value="{{$subcategory->name}}">{{$subcategory->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label for="new_category">Új kategória hozzáadása</label>
+                                    <input type="text" name="new_category" id="new_category"
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="category">
-                                        Főkategória
-                                    </label>
-                                    <select name="category" id="category">
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->name}}">{{$category->name}}</option>
-                                        @endforeach
-                                        {{--                                    <option value="add">Új hozzáadása</option>--}}
-                                    </select>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label for="subcategory">
-                                        Alkategória
-                                    </label>
-                                    <select name="subcategory" id="subcategory">
-                                        @foreach($subcategories as $subcategory)
-                                            <option value="{{$subcategory->name}}">{{$subcategory->name}}</option>
-                                        @endforeach
-                                        {{--                                    <option value="add">Új hozzáadása</option>--}}
-                                    </select>
+                                    <label for="new_sub_category">Új alkategória hozzáadása</label>
+                                    <input type="text" name="new_sub_category" id="new_sub_category"
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
 
                                 <div class="md:col-span-5 text-right">
