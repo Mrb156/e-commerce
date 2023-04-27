@@ -18,14 +18,14 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="{{route('admin.dashboard')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Kezelőfelület</a>
+                           class="{{Route::is('admin.dashboard') ? 'text-indigo-600 hover:text-indigo-600' : 'text-grey-600 hover:text-indigo-400'}} px-3 py-2 rounded-md text-sm font-medium">Kezelőfelület</a>
                         <a href="{{route('admin.products')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Termék
+                           class="{{Route::is('admin.products') ? 'text-indigo-600 hover:text-indigo-600' : 'text-grey-600 hover:text-indigo-400'}} px-3 py-2 rounded-md text-sm font-medium">Termék
                             hozzáadása </a>
                         <a href="{{route('admin.orders')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Rendelések</a>
+                           class="{{Route::is('admin.orders') ? 'text-indigo-600 hover:text-indigo-600' : 'text-grey-600 hover:text-indigo-400'}} px-3 py-2 rounded-md text-sm font-medium">Rendelések</a>
                         <a href="{{route('admin.users')}}"
-                           class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Felhasználók</a>
+                           class="{{Route::is('admin.users') ? 'text-indigo-600 hover:text-indigo-600' : 'text-grey-600 hover:text-indigo-400'}} px-3 py-2 rounded-md text-sm font-medium">Felhasználók</a>
                     </div>
                 </div>
             </div>
