@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\PlacedOrder;
 use App\Models\PlacedOrderItem;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -76,6 +77,8 @@ class AdminController extends Controller
             'imageUrl' => $input['link'],
             'category_id' => $category_id,
             'sub_category_id' => $sub_category_id,
+            'review_count' => 0,
+            'avg_stars' => 0,
         ]);
         return redirect()->back();
     }
@@ -84,6 +87,10 @@ class AdminController extends Controller
     {
         $input = $request->all();
         $product = Product::select('*')->where('id', 'like', $input['prod_id'])->first();
+        $reviews = Review::select('*')->where('product_id', 'like', $product->id)->get();
+        foreach ($reviews as $review) {
+            $review->delete();
+        }
         $product->delete();
         return redirect()->back();
     }

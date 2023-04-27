@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Review extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'user_name',
+        'product_id',
         'description',
-        'price',
-        'imageUrl',
-        'category_id',
-        'sub_category_id',
-        'review_count',
-        'avg_stars'
+        'star',
     ];
 }

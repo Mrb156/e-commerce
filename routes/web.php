@@ -5,7 +5,9 @@ use App\Http\Controllers\AuthLoginRegisterController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Order;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
@@ -64,6 +66,7 @@ Route::get('/itemOverview/{id}', function (int $id) {
     $product = Product::select('*')->where('id', 'like', $id)->first();
     $subCategory = SubCategory::select('*')->where('id', 'like', $product->sub_category_id)->first();
     $category = Category::select('*')->where('id', 'like', $subCategory->category_id)->first();
+    $reviews = Review::select('*')->where('product_id', 'like', $product->id)->get();
     return view('overview', [
         'subCategory' => $subCategory,
         'category' => $category,
@@ -72,9 +75,10 @@ Route::get('/itemOverview/{id}', function (int $id) {
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
         'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
         'order' => DB::table('orders')->select('*')->where('id', '=', $orderId)->first(),
+        'reviews' => $reviews,
     ]);
 })->name('itemOverview');
-
+Route::post('/addReview', [ReviewController::class, 'addReview'])->name('review.add')->middleware('auth');
 
 Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {
     if (Auth::check()) {

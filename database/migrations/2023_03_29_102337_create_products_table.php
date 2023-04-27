@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->text('description');
             $table->integer('price');
             $table->text('imageUrl');
+            $table->integer('review_count');
+            $table->float('avg_stars');
             $table->timestamps();
         });
     }
