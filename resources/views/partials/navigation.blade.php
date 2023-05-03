@@ -260,7 +260,7 @@
                                         </div>
                                         <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                             <p>
-                                                or
+                                                vagy
                                                 <button type="button" @click="cartShow = false"
                                                         class="font-medium text-indigo-600 hover:text-indigo-500">
                                                     Vásárlás folytatása

@@ -23,3 +23,6 @@ Mobile menu
         </div>
     </div>
 </div>
+<div class="flex justify-center">
+    {{ $products->links('pagination::tailwind') }}
+</div>

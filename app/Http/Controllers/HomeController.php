@@ -35,7 +35,7 @@ class HomeController extends Controller
 
         $search = $request->input('searchTerm');
 
-        $products = Product::query()->where('name', 'like', "%{$search}%")->get();
+        $products = Product::query()->where('name', 'like', "%{$search}%")->paginate(10);
 
 
         return view('home', [

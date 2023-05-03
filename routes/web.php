@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthLoginRegisterController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SubCategoryController;
 use App\Models\Order;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
@@ -101,7 +103,7 @@ Route::get('/products/{categoryName}/{subCategoryName}', function (string $categ
         $subCategoryID = '*';
     }
     return view('home', [
-        'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->get(),
+        'products' => DB::table('products')->select('*')->where('sub_category_id', '=', $subCategoryID)->paginate(10),
         'categories' => DB::table('categories')->select('*')->get(),
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
         'subcategory' => $subCategory,
@@ -124,7 +126,7 @@ Route::get('/products/{categoryName}', function (string $categoryName) {
     $categoryID = $category['id'];
 
     return view('home', [
-        'products' => DB::table('products')->select('*')->where('category_id', '=', $categoryID)->get(),
+        'products' => DB::table('products')->select('*')->where('category_id', '=', $categoryID)->paginate(10),
         'categories' => DB::table('categories')->select('*')->get(),
         'subcategories' => DB::table('sub_categories')->select('*')->get(),
         'order_items' => DB::table('order_items')->select('*')->where('order_id', '=', $orderId)->get(),
@@ -135,3 +137,7 @@ Route::get('/products/{categoryName}', function (string $categoryName) {
 
 Route::get('/checkout', [CheckOutController::class, 'index'])->name('checkout')->middleware('auth');
 Route::post('/payment', [OrderController::class, 'archiveOrder'])->name('order.delete')->middleware('auth');
+
+
+Route::get('cat', [CategoryController::class, 'index']);
+Route::post('subcat', [CategoryController::class, 'subCat'])->name('subcat');
