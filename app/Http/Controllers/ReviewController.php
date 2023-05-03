@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 class ReviewController extends Controller
 {
@@ -27,8 +28,12 @@ class ReviewController extends Controller
         if ($product->avg_stars == 0) {
             $product->avg_stars = $input['rating'];
         } else {
-
-            $product->avg_stars = ($product->star + $input['rating']) / 2;
+            $reviews = Review::select('*')->where('product_id', 'like', $product->id)->get();
+            $sum = 0;
+            foreach ($reviews as $review) {
+                $sum += $review->star;
+            }
+            $product->avg_stars = $sum / count($reviews);
         }
         $product->review_count++;
         $product->save();
