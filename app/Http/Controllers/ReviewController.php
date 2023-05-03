@@ -13,10 +13,14 @@ class ReviewController extends Controller
     public function addReview(Request $request)
     {
         $input = $request->all();
+        $desc = '';
+        if ($request->has('description')) {
+            $desc = $input['description'];
+        }
         Review::create([
             'user_name' => Auth::user()->name,
             'product_id' => $input['product_id'],
-            'description' => $input['description'],
+            'description' => $desc,
             'star' => $input['rating']
         ]);
         $product = Product::find($input['product_id']);

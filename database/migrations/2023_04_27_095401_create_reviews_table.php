@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('user_name');
             $table->foreignIdFor(\App\Models\Product::class)->constrained('products');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('star');
             $table->timestamps();
         });
