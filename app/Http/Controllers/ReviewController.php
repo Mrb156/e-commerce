@@ -28,6 +28,6 @@ class ReviewController extends Controller
         }
         $product->review_count++;
         $product->save();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Értékelés hozzáadva');
     }
 }

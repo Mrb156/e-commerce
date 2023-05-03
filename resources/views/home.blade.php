@@ -1,4 +1,5 @@
 @include('partials.navigation')
+@include('partials.alert')
 <div class="bg-white">
     <!--
 Mobile menu

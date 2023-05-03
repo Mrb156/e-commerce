@@ -78,6 +78,6 @@ class OrderController extends Controller
         }
         $order->delete();
         Order::factory()->create();
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message', 'Megrendelés leadva!');
     }
 }

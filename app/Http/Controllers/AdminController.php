@@ -55,7 +55,7 @@ class AdminController extends Controller
             $item->delete();
         }
         $order->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Megrendelés törölve!');
     }
 
     public function getUsers()
@@ -104,7 +104,7 @@ class AdminController extends Controller
             'review_count' => 0,
             'avg_stars' => 0,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Termék létrehozva!');
     }
 
     public function deleteProduct(Request $request)
@@ -116,7 +116,7 @@ class AdminController extends Controller
             $review->delete();
         }
         $product->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Termék törölve!');
     }
 
     public function deleteUser(Request $request)
@@ -132,6 +132,6 @@ class AdminController extends Controller
             $order->delete();
             $user->delete();
         }
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Felhasználó törölve!');
     }
 }

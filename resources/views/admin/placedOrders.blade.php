@@ -1,7 +1,7 @@
 @include('admin.partials.navigation')
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
-<!-- component -->
+@include('partials.alert')
 <div class="mt-3" x-data="{dropDownShow : false}">
     <div class="relative px-4 sm:px-8 max-w-5xl m-auto">
         <h1 class="text-center font-semibold text-sm">Összes leadott rendelés</h1>

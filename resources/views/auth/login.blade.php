@@ -62,7 +62,7 @@
                     clip-rule="evenodd"/>
             </svg>
           </span>
-                    Sign in
+                    Bejelentkezés
                 </button>
             </div>
         </form>
