@@ -13,7 +13,9 @@
         "laravel/ui": "^4.2"
     },
     "require-dev": {
+        "beyondcode/laravel-er-diagram-generator": "^2.0",
         "fakerphp/faker": "^1.9.1",
+        "kevincobain2000/laravel-erd": "^1.6",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",

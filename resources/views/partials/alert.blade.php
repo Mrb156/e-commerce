@@ -3,7 +3,7 @@
         <div x-show="show"
              class="container max-w-screen-lg mx-auto bg-indigo-100 border border-indigo-400 text-indigo-700 px-4 py-3 rounded relative"
              role="alert">
-            <strong class="font-bold">{{session('message')}}Teszt</strong>
+            <strong class="font-bold">{{session('message')}}</strong>
             <button @click="show =! show">
             <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
     <svg class="fill-current h-6 w-6 text-indigo-500" role="button" xmlns="http://www.w3.org/2000/svg"

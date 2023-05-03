@@ -68,10 +68,10 @@ class AdminController extends Controller
     public function addProduct(Request $request)
     {
         $input = $request->all();
-        if ($input['new_category'] == null) {
-            $category_id = Category::select('*')->where('name', 'like', $input['category'])->first()->id;
-            if ($input['new_sub_category'] == null) {
-                $sub_category_id = SubCategory::select('*')->where('name', 'like', $input['subcategory'])->first()->id;
+        if (!$request->has('new_category')) {
+            $category_id = Category::select('*')->where('id', 'like', $input['category'])->first()->id;
+            if (!$request->has('new_sub_category')) {
+                $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
             } else {
                 $new_sub = SubCategory::create([
                     'name' => $input['new_sub_category'],
@@ -84,8 +84,8 @@ class AdminController extends Controller
                 'name' => $input['new_category'],
             ]);
             $category_id = $new_cat->id;
-            if ($input['new_sub_category'] == null) {
-                $sub_category_id = SubCategory::select('*')->where('name', 'like', $input['subcategory'])->first()->id;
+            if (!$request->has('new_sub_category')) {
+                $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
             } else {
                 $new_sub = SubCategory::create([
                     'name' => $input['new_sub_category'],

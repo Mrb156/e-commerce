@@ -29,7 +29,8 @@
                         </div>
 
                         <div class="lg:col-span-2">
-                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                            <div x-data="{ showCat: 'new', showSubCat: 'new' }"
+                                 class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="md:col-span-5">
                                     <label for="full_name">Termék neve</label>
                                     <input type="text" name="prod_name" id="prod_name"
@@ -44,8 +45,7 @@
                                 <div class="md:col-span-5">
                                     <label for="text">Termék leírása</label>
                                     <textarea name="description" id="description"
-                                              class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
-                                </textarea>
+                                              class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"></textarea>
                                 </div>
                                 <div class="md:col-span-5">
                                     <label for="number">Termék ára (Ft)</label>
@@ -60,11 +60,14 @@
                                         <label for="category">
                                             Főkategória
                                         </label>
-                                        <select class="browser-default custom-select" name="category" id="category">
-                                            <option selected>Válassz kategóriát</option>
+                                        <select x-model="showCat" class="browser-default custom-select"
+                                                name="category"
+                                                id="category">
+                                            <option value="new">Új főkategória hozzáadása</option>
                                             @foreach($categories as $category)
                                                 <option
-                                                    value="{{$category->id}}">{{$category->name}}</option>
+                                                    value="{{$category->id}}">{{$category->name}}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,24 +75,26 @@
                                         <label for="subcategory">
                                             Alkategória
                                         </label>
-                                        <select class="browser-default custom-select" name="subcategory"
+                                        <select x-model="showSubCat" class="browser-default custom-select"
+                                                name="subcategory"
                                                 id="subcategory">
+                                            <option value="new">Új alkategória hozzáadása</option>
                                         </select>
                                     </div>
-
                                 </div>
-                                <div class="md:col-span-3">
-                                    <label for="new_category">Új kategória hozzáadása</label>
-                                    <input type="text" name="new_category" id="new_category"
-                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
+                                <div class="md:col-span-2">
+                                    <input x-bind:disabled="showCat!='new'" type="text" name="new_category"
+                                           id="new_category"
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""
+                                           x-bind:placeholder="showCat!='new' ? '' : 'Új főkategória neve'"/>
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="new_sub_category">Új alkategória hozzáadása</label>
-                                    <input type="text" name="new_sub_category" id="new_sub_category"
-                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
+                                    <input x-bind:disabled="showSubCat!='new'" type="text" name="new_sub_category"
+                                           id="new_sub_category"
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""
+                                           x-bind:placeholder="showSubCat!='new' ? '' : 'Új alkategória neve'"/>
                                 </div>
-
                                 <div class="md:col-span-5 text-right">
                                     <div class="inline-flex items-end">
                                         <button type="submit"
@@ -108,8 +113,6 @@
     </div>
 </form>
 
-</body>
-
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -127,6 +130,7 @@
                 },
                 success: function (data) {
                     $('#subcategory').empty();
+                    $('#subcategory').append('<option value="new">Új alkategória hozzáadása</option>');
                     $.each(data.subcategories,
                         function (index, subcategory) {
                             $('#subcategory').append('<option value="' + subcategory.id + '">' + subcategory.name + '</option>');
@@ -136,3 +140,5 @@
         });
     });
 </script>
+</body>
+
