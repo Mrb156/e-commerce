@@ -102,6 +102,7 @@
 
 
                             @if(\Illuminate\Support\Facades\Auth::check())
+
                                 <div x-data="{dropDownShow : false}">
                                     <div class="relative inline-block text-left">
                                         <div>
@@ -125,7 +126,12 @@
                                              role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
                                              tabindex="-1">
                                             <div class="py-1" role="none">
-                                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                                @if(auth()->user()->isAdmin())
+                                                    <a class="text-gray-700 block px-4 py-2 text-sm"
+                                                       role="menuitem" tabindex="-1"
+                                                       href="{{route('admin.dashboard')}}"
+                                                       id="menu-item-0">Kezelőfelület</a>
+                                                @endif
                                                 <a class="text-gray-700 block px-4 py-2 text-sm"
                                                    role="menuitem" tabindex="-1"
                                                    id="menu-item-0">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
@@ -136,7 +142,8 @@
                                                     @csrf
                                                     <button type="submit"
                                                             class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                                                            role="menuitem" tabindex="-1" id="menu-item-3">Kijelentkezés
+                                                            role="menuitem" tabindex="-1" id="menu-item-3">
+                                                        Kijelentkezés
                                                     </button>
                                                 </form>
                                             </div>
