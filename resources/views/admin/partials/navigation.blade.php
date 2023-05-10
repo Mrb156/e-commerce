@@ -11,7 +11,7 @@
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
-                <a href="#" class="flex-shrink-0">
+                <a href="{{route('home')}}" class="flex-shrink-0">
                     <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                          alt="Workflow">
                 </a>
