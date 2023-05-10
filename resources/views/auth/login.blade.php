@@ -39,17 +39,17 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember-me" name="remember-me" type="checkbox"
-                           class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Jegyezz meg</label>
-                </div>
+            {{--            <div class="flex items-center justify-between">--}}
+            {{--                <div class="flex items-center">--}}
+            {{--                    <input id="remember-me" name="remember-me" type="checkbox"--}}
+            {{--                           class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">--}}
+            {{--                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Jegyezz meg</label>--}}
+            {{--                </div>--}}
 
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Elfelejtetted a jelszavad?</a>
-                </div>
-            </div>
+            {{--                <div class="text-sm">--}}
+            {{--                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Elfelejtetted a jelszavad?</a>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
 
             <div>
                 <button type="submit"
