@@ -146,7 +146,7 @@
                 <li class="grid grid-cols-6 gap-2 border-b-1">
                     <div class="col-span-1 self-center">
                         <img
-                            src="{{ DB::table('products')->select('*')->where('id', '=', $order_item->product_id)->first()->imageUrl }}"
+                            src="/{{ DB::table('products')->select('*')->where('id', '=', $order_item->product_id)->first()->image }}"
                             alt="Product" class="rounded w-full">
                     </div>
                     <div class="flex flex-col col-span-3 pt-2">

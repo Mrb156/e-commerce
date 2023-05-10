@@ -39,8 +39,8 @@
         <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
 
             <div class="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-                <img src="{{$product->imageUrl}}"
-                     alt="Two each of gray, white, and black shirts laying flat."
+                <img src="/{{$product->image}}"
+                     alt="Kép nem található"
                      class="h-full w-full object-cover object-center">
             </div>
 

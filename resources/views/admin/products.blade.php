@@ -1,9 +1,8 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel 9 jquery ajax categories and subcategories, select dropdown</title>
+    <title>Admin felület</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
@@ -15,7 +14,7 @@
 @include('partials.alert')
 <body>
 
-<form method="POST" action="{{route("product.add")}}">
+<form method="POST" action="{{route("product.add")}}" enctype="multipart/form-data">
     @csrf
     <div class="min-h-screen p-6 bg-gray-100 flex justify-center">
         <div class="container max-w-screen-lg mx-auto">
@@ -37,9 +36,9 @@
                                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
                                 <div class="md:col-span-5">
-                                    <label for="link">Kép linkje</label>
-                                    <input type="text" name="link" id="link"
-                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
+                                    <label for="imageUp">Kép feltöltése</label>
+                                    <input type="file" name="imageUp" id="imageUp"
+                                           class="w-full"/>
                                 </div>
 
                                 <div class="md:col-span-5">

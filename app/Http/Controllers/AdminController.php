@@ -15,6 +15,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -94,16 +96,34 @@ class AdminController extends Controller
                 $sub_category_id = $new_sub->id;
             }
         }
-        Product::create([
+        $product = Product::create([
             'name' => $input['prod_name'],
             'description' => $input['description'],
             'price' => $input['price'],
-            'imageUrl' => $input['link'],
+            'imageUrl' => "",
             'category_id' => $category_id,
             'sub_category_id' => $sub_category_id,
             'review_count' => 0,
             'avg_stars' => 0,
         ]);
+
+        if ($request->hasFile('imageUp')) {
+            $request->validate([
+                'imageUp' => ['nullable', 'image'],
+            ]);
+            $imageFile = $request->file('imageUp');
+            $basePath = 'uploads/products';
+            $extension = $imageFile->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $imageFile->move($basePath, $fileName);
+            $finalImagePathName = $basePath . '/' . $fileName;
+
+            $product->update([
+                'image' => $finalImagePathName,
+            ]);
+
+        }
+
         return redirect()->back()->with('message', 'Termék létrehozva!');
     }
 
@@ -116,6 +136,9 @@ class AdminController extends Controller
             $review->delete();
         }
         $product->delete();
+        if (File::exists($product->image)) {
+            File::delete($product->image);
+        }
         return redirect()->back()->with('message', 'Termék törölve!');
     }
 

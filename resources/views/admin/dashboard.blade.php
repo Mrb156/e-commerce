@@ -9,7 +9,7 @@
             @foreach($products as $product)
                 <li class="px-4 py-2 bg-white border-b last:border-none border-gray-200">
                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-4 items-center">
-                        <img src="{{$product->imageUrl}}" alt=""
+                        <img src="/{{ $product->image }}" alt=""
                              class="h-25 w-20 object-fill object-center">
                         <h3 class="mt-4 text-sm text-gray-700">{{$product->name}}</h3>
                         <h3 class="mt-4 text-sm text-gray-700">{{$product->description}}</h3>

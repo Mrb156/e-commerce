@@ -27,7 +27,7 @@
                                 <li class="px-4 py-2 bg-white border-b last:border-none border-gray-200">
                                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-4">
                                         <img class="h-25 w-20 object-fill object-center"
-                                             src="{{\Illuminate\Support\Facades\DB::table('products')->select('*')->where('id', 'like', $order_item->product_id)->first()->imageUrl}}">
+                                             src="{{\Illuminate\Support\Facades\DB::table('products')->select('*')->where('id', 'like', $order_item->product_id)->first()->image}}">
                                         <h3 class="mt-4 text-sm text-gray-700">{{\Illuminate\Support\Facades\DB::table('products')->select('*')->where('id', 'like', $order_item->product_id)->first()->name}}</h3>
                                         <h3 class="mt-4 text-sm text-gray-700">{{$order_item->quantity}}</h3>
                                         <h3 class="mt-4 text-sm text-gray-700">{{$order_item->price}}</h3>
