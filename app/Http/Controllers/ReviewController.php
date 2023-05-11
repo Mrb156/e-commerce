@@ -47,4 +47,24 @@ class ReviewController extends Controller
         $product->save();
         return redirect()->back()->with('message', 'Értékelés hozzáadva');
     }
+
+    public function deleteReview(Request $request)
+    {
+        $input = $request->all();
+        $review = Review::select('*')->where('id', 'like', $input['id'])->first();
+        $product = Product::select('*')->where('id', 'like', $review->product_id)->first();
+        $review->delete();
+
+        $reviews = Review::select('*')->where('product_id', 'like', $product->id)->get();
+        $sum = 0;
+        foreach ($reviews as $review) {
+            $sum += $review->star;
+        }
+        $product->avg_stars = $sum / count($reviews);
+        $product->review_count--;
+        $product->save();
+
+        return redirect()->back()->with('message', 'Értékelés törölve!');
+
+    }
 }

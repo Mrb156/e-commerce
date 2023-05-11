@@ -38,6 +38,22 @@ Route::post('/deleteProduct', [AdminController::class, 'deleteProduct'])->name('
 Route::get('/adminProducts', [AdminController::class, 'getProducts'])->name('admin.products')->middleware('admin');
 Route::post('/addProduct', [AdminController::class, 'addProduct'])->name('product.add')->middleware('admin');
 
+Route::get('/adminProducts/update/{id}', function (int $id) {
+    $product = Product::select('*')->where('id', 'like', $id)->first();
+    $subCategory = SubCategory::select('*')->where('id', 'like', $product->sub_category_id)->first();
+    $category = Category::select('*')->where('id', 'like', $subCategory->category_id)->first();
+    $reviews = Review::select('*')->where('product_id', 'like', $product->id)->get();
+    return view('admin.updateProduct', [
+        'subCategory' => $subCategory,
+        'category' => $category,
+        'product' => $product,
+        'reviews' => $reviews,
+    ]);
+})->name('admin.products.update')->middleware('admin');
+Route::post('/updateProduct', [AdminController::class, 'updateProduct'])->name('product.update')->middleware('admin');
+
+Route::post('/deleteReview', [ReviewController::class, 'deleteReview'])->name('review.delete')->middleware('admin');
+
 
 Route::get('/adminOrders', [AdminController::class, 'getOrders'])->name('admin.orders')->middleware('admin');
 Route::post('/deleteOrder', [AdminController::class, 'deleteOrders'])->name('p_order.delete')->middleware('admin');

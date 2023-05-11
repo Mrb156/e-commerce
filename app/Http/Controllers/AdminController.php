@@ -154,6 +154,50 @@ class AdminController extends Controller
 
     }
 
+    public function updateProduct(Request $request)
+    {
+        try {
+            $request->validate([
+                'prod_name' => ['required'],
+                'description' => ['required'],
+                'price' => ['required'],
+            ]);
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Termékmódosítás nem sikerült!');
+        }
+        $product = Product::select('*')->where('id', 'like', $request->product_id)->first();
+        $product->update([
+            'name' => $request->prod_name,
+            'description' => $request->description,
+            'price' => $request->price,
+        ]);
+
+//        try {
+        if ($request->hasFile('imageUp')) {
+
+            $request->validate([
+                'imageUp' => ['nullable', 'image'],
+            ]);
+            $imageFile = $request->file('imageUp');
+            $basePath = 'uploads/products';
+            if ($product->image) {
+                File::delete($product->image);
+            }
+            $extension = $imageFile->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $imageFile->move($basePath, $fileName);
+            $finalImagePathName = $basePath . '/' . $fileName;
+
+            $product->update([
+                'image' => $finalImagePathName,
+            ]);
+        }
+//        } catch (\Throwable $e) {
+//            return redirect()->back()->with('message', 'Fájlfeltöltés nem sikerült');
+//        }
+        return redirect()->back()->with('message', 'Termék módosítva!');
+    }
+
     public function deleteProduct(Request $request)
     {
         $input = $request->all();
