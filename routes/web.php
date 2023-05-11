@@ -80,6 +80,7 @@ Route::get('/itemOverview/{id}', function (int $id) {
         'reviews' => $reviews,
     ]);
 })->name('itemOverview');
+
 Route::post('/addReview', [ReviewController::class, 'addReview'])->name('review.add')->middleware('auth');
 
 Route::get('/products/{categoryName}/{subCategoryName}', function (string $categoryName, string $subCategoryName) {

@@ -31,34 +31,12 @@
 @include('partials.navigation')
 <div class="h-screen grid grid-cols-3">
     <div class="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
-        <div class="mt-8 p-4 relative flex flex-col sm:flex-row sm:items-center bg-white shadow rounded-md">
-            <div class="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
-                <div class="text-yellow-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 sm:w-5 h-6 sm:h-5" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <div class="text-sm font-medium ml-3">Fizetés</div>
-            </div>
-            <div class="text-sm tracking-wide text-gray-500 mt-4 sm:mt-0 sm:ml-4">Töltsd ki az alábbi mezőket a
-                fizetéshez.
-            </div>
-            <div
-                class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </div>
-        </div>
         <div class="rounded-md">
             <form id="payment-form" method="POST" action="{{route('order.delete')}}">
                 @csrf
                 <section>
-                    <h2 class="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Fizetési és szállítási
+                    <h2 class="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Számlázási és
+                        szállítási
                         információk</h2>
                     <fieldset class="mb-3 bg-white shadow-lg rounded text-gray-600">
                         <label class="flex border-b border-gray-200 h-12 py-3 items-center">
@@ -88,44 +66,12 @@
                             <span class="text-right px-2 xl:px-0 xl:text-none">Irányítószám</span>
                             <input name="zip" class="focus:outline-none px-3">
                         </label>
-                        <label class="flex border-t border-gray-200 h-12 py-3 items-center select relative">
-                            <span class="text-right px-2">Ország</span>
-                            <div id="country" class="focus:outline-none px-3 w-full flex items-center">
-                                <select name="country"
-                                        class="border-none bg-transparent flex-1 cursor-pointer appearance-none focus:outline-none">
-                                    <option value="HU" selected="selected">Magyarország</option>
-                                    <option value="AU">Ausztrália</option>
-                                    <option value="BE">Belgium</option>
-                                    <option value="BR">Brazília</option>
-                                    <option value="CA">Kanada</option>
-                                    <option value="CN">Kína</option>
-                                    <option value="DK">Dánia</option>
-                                    <option value="FI">Finnország</option>
-                                    <option value="FR">Franciaország</option>
-                                    <option value="DE">Németország</option>
-                                    <option value="HK">Hongkong</option>
-                                    <option value="IE">Írország</option>
-                                    <option value="IT">Olaszország</option>
-                                    <option value="JP">Japán</option>
-                                    <option value="LU">Luxemburg</option>
-                                    <option value="MX">Mexikó</option>
-                                    <option value="NL">Hollandia</option>
-                                    <option value="PL">Lengyelország</option>
-                                    <option value="PT">Portugália</option>
-                                    <option value="SG">Szingapúr</option>
-                                    <option value="ES">Spanyolország</option>
-                                    <option value="TN">Tunézia</option>
-                                    <option value="GB">Egyesült Királyság</option>
-                                    <option value="US">Egyesült Államok</option>
-                                </select>
-                            </div>
-                        </label>
                     </fieldset>
                 </section>
                 <button
                     type="submit"
                     class="submit-button px-4 py-3 rounded-full bg-indigo-600 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
-                    Fizetés {{$order->price}} Ft
+                    Rendelés elküldése
                 </button>
             </form>
         </div>

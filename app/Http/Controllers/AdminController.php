@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\GraphViz\Exception;
 
 class AdminController extends Controller
 {
@@ -69,62 +70,88 @@ class AdminController extends Controller
 
     public function addProduct(Request $request)
     {
-        $input = $request->all();
-        if (!$request->has('new_category')) {
-            $category_id = Category::select('*')->where('id', 'like', $input['category'])->first()->id;
-            if (!$request->has('new_sub_category')) {
-                $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
-            } else {
-                $new_sub = SubCategory::create([
-                    'name' => $input['new_sub_category'],
-                    'category_id' => $category_id,
-                ]);
-                $sub_category_id = $new_sub->id;
-            }
-        } else {
-            $new_cat = Category::create([
-                'name' => $input['new_category'],
+        try {
+            $request->validate([
+                'prod_name' => ['required'],
+                'description' => ['required'],
+                'price' => ['required'],
             ]);
-            $category_id = $new_cat->id;
-            if (!$request->has('new_sub_category')) {
-                $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Terméklétrehozás nem sikerült!');
+        }
+
+        $input = $request->all();
+        if ($input['category'] == "new" and !$request->has('new_category') or $input['category'] != "new" and $request->has('new_category')) {
+            return redirect()->back()->with('message', 'Adj meg főkategóriát!');
+        } else if ($input['subcategory'] == "new" and !$request->has('new_sub_category') or $input['subcategory'] != "new" and $request->has('new_sub_category')) {
+            return redirect()->back()->with('message', 'Adj meg alkategóriát!');
+        }
+
+        try {
+
+            if (!$request->has('new_category')) {
+                $category_id = Category::select('*')->where('id', 'like', $input['category'])->first()->id;
+                if (!$request->has('new_sub_category')) {
+                    $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
+                } else {
+                    $new_sub = SubCategory::create([
+                        'name' => $input['new_sub_category'],
+                        'category_id' => $category_id,
+                    ]);
+                    $sub_category_id = $new_sub->id;
+                }
             } else {
-                $new_sub = SubCategory::create([
-                    'name' => $input['new_sub_category'],
-                    'category_id' => $category_id,
+                $new_cat = Category::create([
+                    'name' => $input['new_category'],
                 ]);
-                $sub_category_id = $new_sub->id;
+                $category_id = $new_cat->id;
+                if (!$request->has('new_sub_category')) {
+                    $sub_category_id = SubCategory::select('*')->where('id', 'like', $input['subcategory'])->first()->id;
+                } else {
+                    $new_sub = SubCategory::create([
+                        'name' => $input['new_sub_category'],
+                        'category_id' => $category_id,
+                    ]);
+                    $sub_category_id = $new_sub->id;
+                }
             }
+
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Rosszul adtad meg a kategóriát vagy az alkategóriát!');
+
         }
         $product = Product::create([
             'name' => $input['prod_name'],
             'description' => $input['description'],
             'price' => $input['price'],
-            'imageUrl' => "",
             'category_id' => $category_id,
             'sub_category_id' => $sub_category_id,
             'review_count' => 0,
             'avg_stars' => 0,
         ]);
 
-        if ($request->hasFile('imageUp')) {
-            $request->validate([
-                'imageUp' => ['nullable', 'image'],
-            ]);
-            $imageFile = $request->file('imageUp');
-            $basePath = 'uploads/products';
-            $extension = $imageFile->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
-            $imageFile->move($basePath, $fileName);
-            $finalImagePathName = $basePath . '/' . $fileName;
+        try {
+            if ($request->hasFile('imageUp')) {
+                $request->validate([
+                    'imageUp' => ['nullable', 'image'],
+                ]);
+                $imageFile = $request->file('imageUp');
+                $basePath = 'uploads/products';
+                $extension = $imageFile->getClientOriginalExtension();
+                $fileName = time() . '.' . $extension;
+                $imageFile->move($basePath, $fileName);
+                $finalImagePathName = $basePath . '/' . $fileName;
 
-            $product->update([
-                'image' => $finalImagePathName,
-            ]);
+                $product->update([
+                    'image' => $finalImagePathName,
+                ]);
 
+            }
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Fájlfeltöltés nem sikerült');
         }
-
         return redirect()->back()->with('message', 'Termék létrehozva!');
+
     }
 
     public function deleteProduct(Request $request)

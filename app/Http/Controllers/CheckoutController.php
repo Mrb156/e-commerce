@@ -19,6 +19,7 @@ class CheckoutController extends Controller
         } else {
             $orderId = null;
         }
+
         return view('checkout', [
             'categories' => DB::table('categories')->select('*')->get(),
             'subcategories' => DB::table('sub_categories')->select('*')->get(),

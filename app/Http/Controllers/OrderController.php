@@ -54,6 +54,17 @@ class OrderController extends Controller
 
     public function archiveOrder(Request $request)
     {
+        try {
+            $request->validate([
+                'address' => ['required'],
+                'city' => ['required'],
+                'zip' => ['required'],
+                'county' => ['required'],
+            ]);
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Tölts ki minden mezőt!');
+        }
+
         $input = $request->all();
         $order = Order::select('*')->where('user_id', '=', Auth::user()->id)->first();
         $orderItems = OrderItem::select('*')->where('order_id', 'like', $order->id)->get();

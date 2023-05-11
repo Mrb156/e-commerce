@@ -72,7 +72,7 @@
                         <span
                             :class="{'text-green-700': password == password_confirm && password.length > 0, 'text-red-700':password != password_confirm || password.length == 0}"
                             class="font-medium text-sm ml-3"
-                            x-text="password == password_confirm && password.length > 0 ? 'Passwords match' : 'Passwords do not match' "></span>
+                            x-text="password == password_confirm && password.length > 0 ? 'Jelszavak egyeznek' : 'Jelszavak nem egyeznek' "></span>
                     </li>
                     <li class="flex items-center py-1">
                         <div
@@ -92,7 +92,7 @@
                         </div>
                         <span :class="{'text-green-700': password.length > 7, 'text-red-700':password.length <= 7 }"
                               class="font-medium text-sm ml-3"
-                              x-text="password.length > 7 ? 'The minimum length is reached' : 'At least 8 characters required' "></span>
+                              x-text="password.length > 7 ? 'Elérted a minimum karakterszámot' : 'Legalább 8 karakter hosszú legyen a jelszó' "></span>
                     </li>
                 </ul>
             </div>

@@ -88,20 +88,18 @@
                     <!-- Login -->
                     <div class="ml-auto flex items-center">
                         <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                            @if(!\Illuminate\Support\Facades\Auth::check())
+                            @if(!auth()->check())
                                 <a href="{{route('login')}}"
-                                   class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
-                                    in</a>
+                                   class="text-sm font-medium text-gray-700 hover:text-gray-800">Bejelentkezés</a>
                                 <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                                 <a href="{{route('register')}}"
-                                   class="text-sm font-medium text-gray-700 hover:text-gray-800">Create
-                                    account</a>
+                                   class="text-sm font-medium text-gray-700 hover:text-gray-800">Regisztráció</a>
                                 <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                             @endif
 
 
 
-                            @if(\Illuminate\Support\Facades\Auth::check())
+                            @if(auth()->check())
 
                                 <div x-data="{dropDownShow : false}">
                                     <div class="relative inline-block text-left">
@@ -134,10 +132,10 @@
                                                 @endif
                                                 <a class="text-gray-700 block px-4 py-2 text-sm"
                                                    role="menuitem" tabindex="-1"
-                                                   id="menu-item-0">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                                                   id="menu-item-0">{{auth()->user()->name}}</a>
                                                 <a class="text-gray-700 block px-4 py-2 text-sm"
                                                    role="menuitem" tabindex="-1"
-                                                   id="menu-item-1">{{\Illuminate\Support\Facades\Auth::user()->email}}</a>
+                                                   id="menu-item-1">{{auth()->user()->email}}</a>
                                                 <form method="POST" action="{{route('logout')}}" role="none">
                                                     @csrf
                                                     <button type="submit"
@@ -174,6 +172,7 @@
             </div>
         </nav>
     </header>
+    @include('partials.alert')
     @if(Auth::check())
         <!-- Cart -->
         <div x-show="cartShow" @click.outside="cartShow = false">
@@ -270,7 +269,7 @@
                                                 vagy
                                                 <button type="button" @click="cartShow = false"
                                                         class="font-medium text-indigo-600 hover:text-indigo-500">
-                                                    Vásárlás folytatása
+                                                    folytasd a vásárlást!
                                                     <span aria-hidden="true"> &rarr;</span>
                                                 </button>
                                             </p>

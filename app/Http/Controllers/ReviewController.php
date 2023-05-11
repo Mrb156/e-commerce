@@ -13,6 +13,14 @@ class ReviewController extends Controller
 {
     public function addReview(Request $request)
     {
+        try {
+            $request->validate([
+                'rating' => ['required', 'numeric', 'min:1'],
+            ]);
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Véleményezés nem sikerült!');
+        }
+
         $input = $request->all();
         $desc = '';
         if ($request->has('description')) {
