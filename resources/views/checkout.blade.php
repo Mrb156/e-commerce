@@ -42,20 +42,20 @@
                         <label class="flex border-b border-gray-200 h-12 py-3 items-center">
                             <span class="text-right px-2">Név</span>
                             <input name="name" class="focus:outline-none px-3"
-                                   required="" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+                                   required value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
                         </label>
                         <label class="flex border-b border-gray-200 h-12 py-3 items-center">
                             <span class="text-right px-2">Email</span>
                             <input name="Email" class="focus:outline-none px-3"
-                                   required="" value="{{\Illuminate\Support\Facades\Auth::user()->email}}">
+                                   required value="{{\Illuminate\Support\Facades\Auth::user()->email}}">
                         </label>
                         <label class="flex border-b border-gray-200 h-12 py-3 items-center">
                             <span class="text-right px-2">Szállítási cím</span>
-                            <input name="address" class="focus:outline-none px-3">
+                            <input name="address" class="focus:outline-none px-3" required>
                         </label>
                         <label class="flex border-b border-gray-200 h-12 py-3 items-center">
                             <span class="text-right px-2">Város</span>
-                            <input name="city" class="focus:outline-none px-3">
+                            <input name="city" class="focus:outline-none px-3" required>
                         </label>
                         <label class="inline-flex w-2/4 border-gray-200 py-3">
                             <span class="text-right px-2">Megye</span>
@@ -64,7 +64,7 @@
                         <label
                             class="xl:w-1/4 xl:inline-flex py-3 items-center flex xl:border-none border-t border-gray-200 py-3">
                             <span class="text-right px-2 xl:px-0 xl:text-none">Irányítószám</span>
-                            <input name="zip" class="focus:outline-none px-3">
+                            <input name="zip" class="focus:outline-none px-3" required>
                         </label>
                     </fieldset>
                 </section>

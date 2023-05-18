@@ -32,7 +32,7 @@
                                  class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="md:col-span-5">
                                     <label for="full_name">Termék neve</label>
-                                    <input type="text" name="prod_name" id="prod_name"
+                                    <input type="text" name="prod_name" id="prod_name" required
                                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
                                 <div class="md:col-span-5">
@@ -43,12 +43,12 @@
 
                                 <div class="md:col-span-5">
                                     <label for="text">Termék leírása</label>
-                                    <textarea name="description" id="description"
+                                    <textarea name="description" id="description" required
                                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"></textarea>
                                 </div>
                                 <div class="md:col-span-5">
                                     <label for="number">Termék ára (Ft)</label>
-                                    <input type="number" name="price" id="price"
+                                    <input type="number" name="price" id="price" required
                                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value=""/>
                                 </div>
 

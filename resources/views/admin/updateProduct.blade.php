@@ -58,7 +58,7 @@
                 <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                     <div class="md:col-span-5">
                         <label for="full_name">Termék neve</label>
-                        <input type="text" name="prod_name" id="prod_name"
+                        <input type="text" name="prod_name" id="prod_name" required
                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{$product->name}}"/>
                         <input type="hidden" name="product_id" id="product_id"
                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{$product->id}}"/>
@@ -69,7 +69,7 @@
                 <div class="mt-4 lg:row-span-3 lg:mt-0">
                     <div class="md:col-span-5">
                         <label for="number">Termék ára (Ft)</label>
-                        <input type="number" name="price" id="price"
+                        <input type="number" name="price" id="price" required
                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{$product->price}}"/>
                     </div>
 
